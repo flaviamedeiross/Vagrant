@@ -1,0 +1,1 @@
+{"virtualbox":{"/opt/data":{"guestpath":"/opt/data","hostpath":"C:/Docs/8 Semestre/Computacao em Nuvem/Pratica/Projeto_1/Vagrant/data","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Docs/8 Semestre/Computacao em Nuvem/Pratica/Projeto_1/Vagrant","disabled":false,"__vagrantfile":true}}}
