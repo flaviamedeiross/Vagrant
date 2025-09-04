@@ -4,7 +4,10 @@ const http = require('http');
 const PORT = 80;  
 const server = http.createServer((req, res) => {
   res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Frontend rodando!\n');
+  res.write('Frontend rodando!\n');
+  res.write('Flavia\n');
+  res.end();
+
 });
 
 server.listen(PORT, () => {
