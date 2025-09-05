@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Site de Receitas</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Bem-vindo ao Site de Receitas!</h1>
+  <div id="receitas"></div>
+
+  <script>
+    async function carregarReceitas() {
+      try {
+        const response = await fetch('/api/receitas'); 
+        const receitas = await response.json();
+
+        const container = document.getElementById('receitas');
+        container.innerHTML = '';
+
+        receitas.forEach(r => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `<h2>${r.titulo}</h2><p>${r.descricao}</p>`;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Erro ao carregar receitas:', err);
+      }
+    }
+
+    carregarReceitas();
+  </script>
+</body>
+</html>

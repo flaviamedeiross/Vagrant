@@ -4,6 +4,11 @@ const mysql = require('mysql2/promise');
 const app = express();
 app.use(express.json());
 
+const path = require('path');
+// Servir arquivos estáticos da pasta "public"
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 // Conexão com MySQL
 const dbConfig = {
     host: '192.168.56.13',   // IP do backend
@@ -22,10 +27,10 @@ let connection;
     }
 })();
 
-// Rotas do frontend
-app.get('/', (req, res) => {
-    res.send('Frontend rodando e acessando o MySQL!');
-});
+// // Rotas do frontend
+// app.get('/', (req, res) => {
+//     res.send('Frontend rodando e acessando o MySQL!');
+// });
 
 // Rota API que retorna todos os usuários
 app.get('/api/users', async (req, res) => {
@@ -37,14 +42,16 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
-// app.get('/api/users', async (req, res) => {
-//   db.query('SELECT * FROM users', (err, results) => {
-//     if (err) {
-//       return res.status(500).json({ error: err.message });
-//     }
-//     res.json(results);
-//   });
-// });
+// Rota API que retorna todas as receitas
+app.get('/api/receitas', async (req, res) => {
+    try {
+        const [rows] = await connection.execute('SELECT * FROM receitas');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 // // Rota para adicionar usuário
 // app.post('/api/users', async (req, res) => {
