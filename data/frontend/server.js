@@ -7,9 +7,9 @@ app.use(express.json());
 // Conexão com MySQL
 const dbConfig = {
     host: '192.168.56.13',   // IP do backend
-    user: 'usuario',
-    password: 'senha',
-    database: 'meu_db'
+    user: 'admin',
+    password: '1234',
+    database: 'receitas_db'
 };
 
 let connection;
@@ -22,15 +22,19 @@ let connection;
     }
 })();
 
+const path = require('path');
+// Servir arquivos estáticos da pasta "public"
+app.use(express.static(path.join(__dirname, 'public')))
+
 // Rotas do frontend
-app.get('/', (req, res) => {
-    res.send('Frontend rodando e acessando o MySQL!');
-});
+//app.get('/', (req, res) => {
+//    res.send('Frontend rodando e acessando o MySQL!');
+//});
 
 // Rota API que retorna todos os usuários
-app.get('/api/users', async (req, res) => {
+app.get('/api/receitas', async (req, res) => {
     try {
-        const [rows] = await connection.execute('SELECT * FROM users');
+        const [rows] = await connection.execute('SELECT * FROM receitas');
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });

@@ -17,18 +17,18 @@ sudo systemctl enable mysql
 sudo systemctl restart mysql
 
 # Criar banco de dados se não existir 
-sudo mysql -e "CREATE DATABASE IF NOT EXISTS meu_db;"
+sudo mysql -e "CREATE DATABASE IF NOT EXISTS receitas_db;"
 
 # Criar usuário do frontend e conceder permissões 
-sudo mysql -e "CREATE USER IF NOT EXISTS 'usuario'@'192.168.56.12' IDENTIFIED BY 'senha';"
-sudo mysql -e "GRANT ALL PRIVILEGES ON meu_db.* TO 'usuario'@'192.168.56.12';"
+sudo mysql -e "CREATE USER IF NOT EXISTS 'admin'@'192.168.56.12' IDENTIFIED BY '1234';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON receitas_db.* TO 'admin'@'192.168.56.12';"
 sudo mysql -e "FLUSH PRIVILEGES;"
 
 # Importar script SQL existente 
 SQL_FILE="/opt/data/backend/init.sql"
 if [ -f "$SQL_FILE" ]; then
     echo "Importando script SQL: $SQL_FILE"
-    sudo mysql meu_db < "$SQL_FILE"
+    sudo mysql receitas_db < "$SQL_FILE"
 else
     echo "Nenhum script SQL encontrado em $SQL_FILE"
 fi
