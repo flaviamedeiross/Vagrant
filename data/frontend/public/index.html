@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <title>Site de Receitas</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    body { font-family: Arial; margin: 20px; background: #fafafa; }
+    h1 { color: #333; }
+    .card { border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 8px; background: #fff; }
   </style>
 </head>
 <body>
@@ -13,26 +14,21 @@
   <div id="receitas"></div>
 
   <script>
-    async function carregarReceitas() {
-      try {
-        const response = await fetch('/api/receitas'); 
-        const receitas = await response.json();
-
+    fetch('/api/receitas')
+      .then(res => res.json())
+      .then(data => {
         const container = document.getElementById('receitas');
-        container.innerHTML = '';
-
-        receitas.forEach(r => {
+        data.forEach(r => {
           const card = document.createElement('div');
           card.className = 'card';
-          card.innerHTML = `<h2>${r.titulo}</h2><p>${r.descricao}</p>`;
+          card.innerHTML = `<h2>${r.nome}</h2>
+                            <p><strong>Descrição:</strong> ${r.descricao}</p>
+                            <p><strong>Ingredientes:</strong> ${r.ingredientes}</p>
+                            <p><strong>Preparo:</strong> ${r.preparo}</p>`;
           container.appendChild(card);
         });
-      } catch (err) {
-        console.error('Erro ao carregar receitas:', err);
-      }
-    }
-
-    carregarReceitas();
+      })
+      .catch(() => document.getElementById('receitas').innerHTML = '<p>Erro ao carregar receitas.</p>');
   </script>
 </body>
 </html>
